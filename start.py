@@ -18,7 +18,7 @@ while True:
     time.sleep(0.01)
     Config.read_config(config)      # Keep reading config for changes
 
-    sensors = thread.start_new_thread(Sensors.retrieve(sensors), ())
-    print sensors   #TODO check they're updating
-    Body.move(body, direction, sensors, config)
+    u_sensors = Sensors.retrieve(sensors)
+    print u_sensors   #TODO check they're updating
+    Body.move(body, direction, u_sensors, config)
     Camera.move(camera, Config.retrieve(config, 'Camera', 'x'), Config.retrieve(config, 'Camera', 'y'))
