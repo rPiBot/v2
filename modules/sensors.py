@@ -2,7 +2,7 @@ from modules.config import Config
 import RPi.GPIO as GPIO
 import time, threading
 
-class Sensors:
+class Sensors(threading.Thread):
     sensors = { 'F': 0, 'R': 0}
 
     def __init__(self):
