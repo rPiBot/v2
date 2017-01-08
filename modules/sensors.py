@@ -8,7 +8,7 @@ class Sensors:
     def __init__(self, config):
         GPIO.setmode(GPIO.BOARD)
         TRIG = { 'F': 33, 'R': 31}
-        ECHO = { 'F', 40, 'R', 32}
+        ECHO = { 'F': 40, 'R': 32}
 
         GPIO.setup(TRIG['F'], GPIO.OUT)
         GPIO.setup(TRIG['R'], GPIO.OUT)
