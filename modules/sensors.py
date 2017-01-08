@@ -16,8 +16,8 @@ class Sensors:
         GPIO.setup(ECHO['R'], GPIO.IN)
 
         while True:
-            self.sensors['F'] = check_distance(self, TRIG['F'], ECHO['F'])
-            self.sensors['R'] = check_distance(self, TRIG['R'], ECHO['R'])
+            self.sensors['F'] = self.check_distance(self, TRIG['F'], ECHO['F'])
+            self.sensors['R'] = self.check_distance(self, TRIG['R'], ECHO['R'])
 
             time.sleep(0.05)
 
