@@ -11,6 +11,9 @@ GPIO.setup(38, GPIO.OUT)
 class Body:
     state = ''
 
+    def __exit__(self):
+        GPIO.cleanup()
+
     def stop(self, config):
         GPIO.output(35, False)
         GPIO.output(36, False)

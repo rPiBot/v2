@@ -1,11 +1,14 @@
 from modules.config import Config
 import RPi.GPIO as GPIO
-import time
+import time, threading
 
 class Sensors:
     sensors = { 'F': 0, 'R': 0}
 
-    def __init__(self, config):
+    def __init__(self):
+        threading.Thread.__init__(self)
+
+    def run(self):
         GPIO.setmode(GPIO.BOARD)
         TRIG = { 'F': 33, 'R': 31}
         ECHO = { 'F': 40, 'R': 32}
@@ -20,6 +23,9 @@ class Sensors:
             self.sensors['R'] = self.check_distance(TRIG['R'], ECHO['R'])
 
             time.sleep(0.05)
+
+    def __exit__(self):
+        GPIO.cleanup()
 
     def retrieve(self):
         return self.sensors

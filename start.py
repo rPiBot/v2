@@ -1,6 +1,6 @@
 import os, sys, time
 from datetime import datetime
-from thread
+from threading
 
 from modules.camera import Camera
 from modules.body import Body
@@ -10,7 +10,9 @@ from modules.sensors import Sensors
 body = Body()
 camera = Camera()
 config = Config()
-sensors = Sensors(config)
+
+sensors = Sensors()
+sensors.start()
 
 while True:
     time.sleep(0.01)
