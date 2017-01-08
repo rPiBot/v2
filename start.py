@@ -20,5 +20,5 @@ while True:
 
     u_sensors = Sensors.retrieve(sensors)
     print u_sensors   #TODO check they're updating
-    Body.move(body, Config.retrieve('Body', 'direction'), u_sensors, config)
+    Body.move(body, Config.retrieve(config, 'Body', 'direction'), u_sensors, config)
     Camera.move(camera, Config.retrieve(config, 'Camera', 'x'), Config.retrieve(config, 'Camera', 'y'))
