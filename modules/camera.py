@@ -4,17 +4,24 @@ ss = ServoSix()
 
 class Camera():
     cam = {'x': 80, 'y': 60}
-    state = ''
 
-    def __init__(self, initial_state):
-        if initial_state != 'reset':
-            self.pan_tilt('x', 'reset', 0)
-            self.pan_tilt('y', 'reset', 0)
-            self.state = 'reset'
+    def __init__(self):
+        self.move(self.cam['x'], self.cam['y'])
 
     def __exit__(self):
         ss.cleanup()
 
+    def move(self, x, y):
+        # Only move if the new x request is different from the current cam['x'] angle
+        if x != self.cam['x']:
+            self.pan_tilt(self, 'x', x, '')
+
+        if y != self.cam['y']:
+            self.pan_tilt(self, 'y', y, '')
+
+    # Default is to move left/right or up/down 10 degrees ('step' type)
+    # Pass 'snap' as a type to move to the extreme of that axis (for example 'x', 'forwards', 'snap')
+    # Pass an integer as the second parameter to move directly to that degree - the third parameter is then ignored (e.g. 'x', 100, '')
     def pan_tilt(self, axis, direction, type):
         defaults = { 'size': 10, 'range_min': 20, 'range_max': 160, 'x': 80, 'y': 60 }
 
@@ -30,8 +37,6 @@ class Camera():
                 self.cam[axis] = defaults[axis]
             else:
                 self.cam[axis] = float(direction)
-
-            self.state = direction
 
             print axis, direction, self.cam[axis]
 

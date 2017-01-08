@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+from modules.config import Config
 import time, random
 
 GPIO.setmode(GPIO.BOARD)
@@ -10,10 +11,18 @@ GPIO.setup(38, GPIO.OUT)
 class Body:
     state = ''
 
-    def move(self, direction, sensors):
+    def stop(self, config):
+        GPIO.output(35, False)
+        GPIO.output(36, False)
+        GPIO.output(37, False)
+        GPIO.output(38, False)
+        self.state = 'stopped'
+        Config.update_config(config, 'Body', 'direction', 'stopped')
+
+    def move(self, direction, sensors, config):
         if (direction == 'forwards' and sensors['F'] < 20) or (direction == 'backwards' and sensors['R'] < 20):
             print "Not safe to drive", direction
-            direction = 'STOPPED - was unsafe'
+            direction = 'stopped (unsafe)'
 
         auto_stop = False
 
@@ -28,6 +37,8 @@ class Body:
         if sensors['F'] < 10 and sensors['R'] < 10:
             direction = random.choice(['left', 'right'])
             auto_stop = True
+
+        Config.update_config(config, 'Body', 'direction', direction)
 
         if direction != self.state:
             GPIO.output(35, False)
@@ -55,10 +66,7 @@ class Body:
             # Evade mode - move in a direction for only half a second based on sensor information
             if auto_stop == True:
                 time.sleep(0.5)
-                GPIO.output(35, False)
-                GPIO.output(36, False)
-                GPIO.output(37, False)
-                GPIO.output(38, False)
-                self.state = 'stopped after evading'
+                self.stop(config)
+
 
             print direction

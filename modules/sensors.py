@@ -3,6 +3,8 @@ import RPi.GPIO as GPIO
 import time
 
 class Sensors:
+    sensors = { 'F': 0, 'R': 0}
+
     def __init__(self, config):
         GPIO.setmode(GPIO.BOARD)
         TRIG = { 'F': 33, 'R': 31}
@@ -14,9 +16,13 @@ class Sensors:
         GPIO.setup(ECHO['R'], GPIO.IN)
 
         while True:
-            Config.update_config(config, 'Sensors', 'F', check_distance(self, TRIG['F'], ECHO['F']))
-            Config.update_config(config, 'Sensors', 'R', check_distance(self, TRIG['R'], ECHO['R']))
+            self.sensors['F'] = check_distance(self, TRIG['F'], ECHO['F'])
+            self.sensors['R'] = check_distance(self, TRIG['R'], ECHO['R'])
+
             time.sleep(0.05)
+
+    def retrieve(self):
+        return self.sensors
 
     def check_distance(self, trigger, echo):
         time.sleep(0.005) # Wait for sensor to be ready

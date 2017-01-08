@@ -15,12 +15,7 @@ class Config:
         self.config.set('Head', 'y', 90)
 
         self.config.add_section('Body')
-        self.config.set('Body', 'status', 'stopped')
-        self.config.set('Body', 'direction')
-
-        self.config.add_section('Sensors')
-        self.config.set('Sensors', 'F', 0)
-        self.config.set('Sensors', 'R', 0)
+        self.config.set('Body', 'direction', 'stopped')
 
         self.config.add_section('System')
         self.config.set('System', 'created', str(datetime.now()))
