@@ -1,6 +1,6 @@
 import os, sys, time
 from datetime import datetime
-from threading
+import threading
 
 from modules.camera import Camera
 from modules.body import Body
