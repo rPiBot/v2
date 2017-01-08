@@ -15,13 +15,8 @@ while True:
     time.sleep(0.01)
     Config.read_config(config)      # Keep reading config for changes
 
-    if (Config.retrieve(config, 'Body', 'status') == 'moving'):
-        direction = Config.retrieve(config, 'Body', 'direction')
-        sensors = { 'F': Config.retrieve(config, 'Sensors', 'F'), 'R': Config.retrieve(config, 'Sensors', 'R') }
-
-        Body.move(body, direction, sensors)
-    else:
-        Body.stop(body)
+    sensors = { 'F': Config.retrieve(config, 'Sensors', 'F'), 'R': Config.retrieve(config, 'Sensors', 'R') }
+    Body.move(body, direction, sensors)
 
     # only if different from current:
     #Camera.pan_tilt(camera, 'x', Config.retrieve('Camera', 'x'), 'step')
