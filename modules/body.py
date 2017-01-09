@@ -25,48 +25,56 @@ class Body:
     def move(self, direction, sensors, config):
         if (direction == 'forwards' and sensors['F'] < 25) or (direction == 'backwards' and sensors['R'] < 25):
             print "Not safe to drive", direction
-            direction = 'stopped (unsafe)'
+            direction = 'stopped'
 
         auto_stop = False
 
-        if sensors['F'] < 10:
-            direction = 'backwards'
-            auto_stop = True
+        if state == 'stopped': # Evade if necessary
+            if sensors['F'] < 10:
+                direction = 'backwards'
+                auto_stop = 0.1
 
-        if sensors['R'] < 10:
-            direction = 'forwards'
-            auto_stop = True
+            if sensors['R'] < 10:
+                direction = 'forwards'
+                auto_stop = 0.1
 
-        if sensors['F'] < 10 and sensors['R'] < 10:
-            direction = random.choice(['left', 'right'])
-            auto_stop = True
-
-        Config.update_config(config, 'Body', 'direction', direction)
+            if sensors['F'] < 10 and sensors['R'] < 10:
+                direction = random.choice(['left', 'right'])
+                auto_stop = 0.5
 
         if direction != self.state:
-            GPIO.output(35, False)
-            GPIO.output(36, False)
-            GPIO.output(37, False)
-            GPIO.output(38, False)
-
+            Config.update_config(config, 'Body', 'direction', direction)
             self.state = direction
 
             if direction == 'forwards':
-              GPIO.output(37, True)
-              GPIO.output(38, True)
+                GPIO.output(35, False)
+                GPIO.output(36, False)
+                GPIO.output(37, True)
+                GPIO.output(38, True)
             elif direction == 'backwards':
-              GPIO.output(35, True)
-              GPIO.output(36, True)
+                GPIO.output(35, True)
+                GPIO.output(36, True)
+                GPIO.output(37, False)
+                GPIO.output(38, False)
             elif direction == 'left':
+                GPIO.output(35, False)
                 GPIO.output(36, True)
                 GPIO.output(37, True)
+                GPIO.output(38, False)
             elif direction == 'right':
-                GPIO.output(38, True)
                 GPIO.output(35, True)
+                GPIO.output(36, False)
+                GPIO.output(37, False)
+                GPIO.output(38, True)
+            else: # stop
+                GPIO.output(35, False)
+                GPIO.output(36, False)
+                GPIO.output(37, False)
+                GPIO.output(38, False)
 
-            # Evade mode - move in a direction for only half a second based on sensor information
-            if auto_stop == True:
-                time.sleep(0.25)
+            # Evade mode - move in the direction given for only half a second based on sensor information
+            if auto_stop != False:
+                time.sleep(auto_stop)
                 self.stop(config)
 
             print direction
