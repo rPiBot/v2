@@ -21,6 +21,7 @@ class Body:
         GPIO.output(38, False)
 
     def stop(self, config):
+        print 'stop'
         GPIO.output(35, False)
         GPIO.output(36, False)
         GPIO.output(37, False)
@@ -40,11 +41,7 @@ class Body:
                 direction = random.choice(['left', 'right'])
                 self.state = 'evading'
             else:
-                direction = 'stopped'
-                self.state = 'stopped'
-
-        if self.state == 'stopped' or direction == 'stopped':
-            self.stop(config)
+                self.stop(config)
 
         if direction != self.state:
             Config.update_config(config, 'Body', 'direction', direction)
