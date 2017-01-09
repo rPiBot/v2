@@ -14,6 +14,12 @@ class Body:
     def __exit__(self):
         GPIO.cleanup()
 
+    def __init__(self):
+        GPIO.output(35, False)
+        GPIO.output(36, False)
+        GPIO.output(37, False)
+        GPIO.output(38, False)
+
     def stop(self, config):
         GPIO.output(35, False)
         GPIO.output(36, False)
