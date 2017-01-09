@@ -50,7 +50,7 @@ class Body:
         if self.state == 'stopped' or direction == 'stopped':
             self.stop()
 
-        if direction != self.state
+        if direction != self.state:
             Config.update_config(config, 'Body', 'direction', direction)
             self.state = direction
 
