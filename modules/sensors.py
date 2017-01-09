@@ -4,10 +4,14 @@ import time, threading
 
 class Sensors(threading.Thread):
     sensors = { 'F': 0, 'R': 0}
-    running = True
+    running = False
 
     def __init__(self):
         threading.Thread.__init__(self)
+        self.running = True
+
+    def __exit__(self):
+        self.running = False
 
     def run(self):
         GPIO.setmode(GPIO.BOARD)
@@ -24,9 +28,6 @@ class Sensors(threading.Thread):
             self.sensors['R'] = self.check_distance(TRIG['R'], ECHO['R'])
 
             time.sleep(0.1)
-
-    def stop(self):
-        self.running = False
 
     def __exit__(self):
         self.stop()

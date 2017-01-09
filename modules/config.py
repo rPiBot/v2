@@ -22,6 +22,9 @@ class Config:
         self.config.set('System', 'updated', str(datetime.now()))
         self.write_config()
 
+    def __exit__(self):
+        False
+
     def update_config(self, section, key, value):
         self.config.read(self.config_file)
         self.config.set(section, key, value)

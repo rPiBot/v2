@@ -28,19 +28,22 @@ class Body:
             direction = 'stopped'
 
         auto_stop = False
+        
+        if self.state == 'evading':
+            self.state = 'stopped'
 
         if self.state == 'stopped': # Evade if necessary
             if sensors['F'] < 10:
                 direction = 'backwards'
-                auto_stop = 0.05
+                auto_stop = 0.09
 
             if sensors['R'] < 10:
                 direction = 'forwards'
-                auto_stop = 0.05
+                auto_stop = 0.09
 
             if sensors['F'] < 10 and sensors['R'] < 10:
                 direction = random.choice(['left', 'right'])
-                auto_stop = 0.5
+                auto_stop = 0.4
 
         if direction != self.state:
             Config.update_config(config, 'Body', 'direction', direction)
@@ -74,7 +77,8 @@ class Body:
 
             # Evade mode - move in the direction given for only half a second based on sensor information
             if auto_stop != False:
-                time.sleep(auto_stop)
-                self.stop(config)
+                #time.sleep(auto_stop)
+                #self.stop(config)
+                self.state = 'evading'
 
             print direction
