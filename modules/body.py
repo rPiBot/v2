@@ -43,6 +43,9 @@ class Body:
             else:
                 self.stop(config)
 
+        if self.state != 'evading':
+          self.stop(config)
+
         if direction != self.state:
             Config.update_config(config, 'Body', 'direction', direction)
             self.state = direction

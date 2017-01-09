@@ -35,7 +35,7 @@ class Sensors(threading.Thread):
         return self.sensors
 
     def check_distance(self, trigger, echo):
-        time.sleep(0.005) # Wait for sensor to be ready
+        time.sleep(0.01) # Wait for sensor to be ready
         GPIO.output(trigger, True)
         time.sleep(0.00001)
         GPIO.output(trigger, False)
