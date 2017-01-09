@@ -50,31 +50,38 @@ class Body:
     #    print 'a', self.state
 #        print 'a', direction
 
-#        if direction != self.state:
-        Config.update_config(config, 'Body', 'direction', direction)
-        self.state = direction
+        if direction != self.state:
+            self.state = direction
 
-        if direction == 'forwards':
-            GPIO.output(35, False)
-            GPIO.output(36, False)
-            GPIO.output(37, True)
-            GPIO.output(38, True)
-        elif direction == 'backwards':
-            GPIO.output(35, True)
-            GPIO.output(36, True)
-            GPIO.output(37, False)
-            GPIO.output(38, False)
-        elif direction == 'left':
-            GPIO.output(35, False)
-            GPIO.output(36, True)
-            GPIO.output(37, True)
-            GPIO.output(38, False)
-        elif direction == 'right':
-            GPIO.output(35, True)
-            GPIO.output(36, False)
-            GPIO.output(37, False)
-            GPIO.output(38, True)
-        else:
-            self.stop(config)
+            if direction == 'forwards':
+                GPIO.output(35, False)
+                GPIO.output(36, False)
+                GPIO.output(37, True)
+                GPIO.output(38, True)
+                Config.update_config(config, 'Body', 'direction', direction)
 
-        print 'moved', direction
+            elif direction == 'backwards':
+                GPIO.output(35, True)
+                GPIO.output(36, True)
+                GPIO.output(37, False)
+                GPIO.output(38, False)
+                Config.update_config(config, 'Body', 'direction', direction)
+
+            elif direction == 'left':
+                GPIO.output(35, False)
+                GPIO.output(36, True)
+                GPIO.output(37, True)
+                GPIO.output(38, False)
+                Config.update_config(config, 'Body', 'direction', direction)
+
+            elif direction == 'right':
+                GPIO.output(35, True)
+                GPIO.output(36, False)
+                GPIO.output(37, False)
+                GPIO.output(38, True)
+                Config.update_config(config, 'Body', 'direction', direction)
+
+            else:
+                self.stop(config)
+
+            print 'moved', direction
