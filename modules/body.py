@@ -29,7 +29,7 @@ class Body:
 
         auto_stop = False
 
-        if state == 'stopped': # Evade if necessary
+        if self.state == 'stopped': # Evade if necessary
             if sensors['F'] < 10:
                 direction = 'backwards'
                 auto_stop = 0.1
