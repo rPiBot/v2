@@ -12,6 +12,8 @@ class Sensors(threading.Thread):
 
     def __exit__(self):
         self.running = False
+        GPIO.cleanup()
+
 
     def run(self):
         GPIO.setmode(GPIO.BOARD)
@@ -28,10 +30,6 @@ class Sensors(threading.Thread):
             self.sensors['R'] = self.check_distance(TRIG['R'], ECHO['R'])
 
             time.sleep(0.1)
-
-    def __exit__(self):
-        self.stop()
-        GPIO.cleanup()
 
     def retrieve(self):
         return self.sensors

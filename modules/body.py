@@ -27,26 +27,24 @@ class Body:
             print "Not safe to drive", direction
             direction = 'stopped'
 
-        auto_stop = False
-
         if self.state == 'evading':
             direction = 'stopped'
             self.state = 'stopped'
 
         if self.state == 'stopped': # Evade if necessary
-            if sensors['F'] < 10:
+            if sensors['F'] < 25:
                 direction = 'backwards'
-                auto_stop = 0.09
+                self.state = 'evading'
 
-            if sensors['R'] < 10:
+            if sensors['R'] < 25:
                 direction = 'forwards'
-                auto_stop = 0.09
+                self.state = 'evading'
 
-            if sensors['F'] < 10 and sensors['R'] < 10:
+            if sensors['F'] < 25 and sensors['R'] < 25:
                 direction = random.choice(['left', 'right'])
-                auto_stop = 0.4
+                self.state = 'evading'
 
-        if direction != self.state:
+        if direction != self.state or self.state == 'stopped':
             Config.update_config(config, 'Body', 'direction', direction)
             self.state = direction
 
@@ -75,11 +73,5 @@ class Body:
                 GPIO.output(36, False)
                 GPIO.output(37, False)
                 GPIO.output(38, False)
-
-            # Evade mode - move in the direction given for only half a second based on sensor information
-            if auto_stop != False:
-                #time.sleep(auto_stop)
-                #self.stop(config)
-                self.state = 'evading'
 
             print direction
