@@ -31,55 +31,60 @@ class Body:
 
     def move(self, direction, sensors, config):
         if self.state == 'evading':
-            direction = 'stop'
-            self.state = 'stopping'
+            self.state = 'stopped'
+            direction = 'stopped'
 
-        if (sensors['F'] < 25 or sensors['R'] < 25):
-            if sensors['F'] < 10:
-                direction = 'backwards'
-                self.state = 'evading'
-            elif sensors['R'] < 10:
-                direction = 'forwards'
-                self.state = 'evading'
-            elif sensors['F'] < 10 and sensors['R'] < 10:
-                direction = random.choice(['left', 'right'])
-                self.state = 'evading'
-            else:
-                direction = 'stop'
-                self.state = 'stopping'
-                self.stop(config)
+        allowed = { 'F': True, 'F': False }
 
-        if direction != self.state and self.state != 'stopping':
+        if sensors['F'] < 25:
+            allowed['F'] = False
+
+        if sensors['R'] < 25
+            allowed['R'] = False
+
+        if sensors['F'] < 25 or sensors['R'] < 25:
+            self.state = 'stopped'
+
+        if sensors['F'] < 10:
+            direction = 'backwards'
+
+        if sensors['R'] < 10:
+            direction = 'forwards'
+
+        if sensors['F'] < 10 and sensors['R'] < 10:
+            direction = random.choice(['left', 'right'])
+
+        if sensors['F'] < 10 or sensors['R'] < 10:
+            self.state = 'evading'
+
+        if self.state == 'stopped':
+            self.stop(config)
+            return False
+
+        if direction != self.state:
             self.state = direction
+            Config.update_config(config, 'Body', 'direction', direction)
 
-            if direction == 'forwards':
+            if direction == 'forwards' and allowed['F']:
                 GPIO.output(35, False)
                 GPIO.output(36, False)
                 GPIO.output(37, True)
                 GPIO.output(38, True)
-                Config.update_config(config, 'Body', 'direction', direction)
-
-            elif direction == 'backwards':
+            elif direction == 'backwards' and allowed['R']:
                 GPIO.output(35, True)
                 GPIO.output(36, True)
                 GPIO.output(37, False)
                 GPIO.output(38, False)
-                Config.update_config(config, 'Body', 'direction', direction)
-
             elif direction == 'left':
                 GPIO.output(35, False)
                 GPIO.output(36, True)
                 GPIO.output(37, True)
                 GPIO.output(38, False)
-                Config.update_config(config, 'Body', 'direction', direction)
-
             elif direction == 'right':
                 GPIO.output(35, True)
                 GPIO.output(36, False)
                 GPIO.output(37, False)
                 GPIO.output(38, True)
-                Config.update_config(config, 'Body', 'direction', direction)
-
             else:
                 self.stop(config)
 
