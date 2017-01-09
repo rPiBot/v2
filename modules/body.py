@@ -39,7 +39,7 @@ class Body:
         if sensors['F'] < 25:
             allowed['F'] = False
 
-        if sensors['R'] < 25
+        if sensors['R'] < 25:
             allowed['R'] = False
 
         if sensors['F'] < 25 or sensors['R'] < 25:
