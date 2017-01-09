@@ -66,7 +66,7 @@ class Body:
 
             # Evade mode - move in a direction for only half a second based on sensor information
             if auto_stop == True:
-                time.sleep(0.1)
+                time.sleep(0.25)
                 self.stop(config)
 
             print direction
