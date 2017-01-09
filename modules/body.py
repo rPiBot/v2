@@ -28,8 +28,9 @@ class Body:
             direction = 'stopped'
 
         auto_stop = False
-        
+
         if self.state == 'evading':
+            direction = 'stopped'
             self.state = 'stopped'
 
         if self.state == 'stopped': # Evade if necessary
