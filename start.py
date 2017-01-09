@@ -25,4 +25,4 @@ try:
         Camera.move(camera, Config.retrieve(config, 'Head', 'x'), Config.retrieve(config, 'Head', 'y'))
 
 except KeyboardInterrupt:
-    return False
+    exit()

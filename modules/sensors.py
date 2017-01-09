@@ -18,13 +18,17 @@ class Sensors(threading.Thread):
         GPIO.setup(ECHO['F'], GPIO.IN)
         GPIO.setup(ECHO['R'], GPIO.IN)
 
-        while True:
+        while True and self._is_running:
             self.sensors['F'] = self.check_distance(TRIG['F'], ECHO['F'])
             self.sensors['R'] = self.check_distance(TRIG['R'], ECHO['R'])
 
             time.sleep(0.05)
 
+    def stop(self):
+        self._is_running = False
+
     def __exit__(self):
+        self.stop()
         GPIO.cleanup()
 
     def retrieve(self):
