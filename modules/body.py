@@ -21,12 +21,13 @@ class Body:
         GPIO.output(38, False)
 
     def stop(self, config):
-        GPIO.output(35, False)
-        GPIO.output(36, False)
-        GPIO.output(37, False)
-        GPIO.output(38, False)
-        self.state = 'stopped'
-        Config.update_config(config, 'Body', 'direction', 'stopped')
+        if self.state != 'stopped':
+            GPIO.output(35, False)
+            GPIO.output(36, False)
+            GPIO.output(37, False)
+            GPIO.output(38, False)
+            self.state = 'stopped'
+            Config.update_config(config, 'Body', 'direction', 'stopped')
 
     def move(self, direction, sensors, config):
         if self.state == 'evading':
@@ -35,9 +36,11 @@ class Body:
         allowed = { 'F': True, 'R': True }
 
         if sensors['F'] < 25:
+            print 'Not allowed to drive forwards'
             allowed['F'] = False
 
         if sensors['R'] < 25:
+            print 'Not allowed to drive backwards'
             allowed['R'] = False
 
         if sensors['F'] < 25 or sensors['R'] < 25:
@@ -54,8 +57,9 @@ class Body:
 
         if sensors['F'] < 10 or sensors['R'] < 10:
             self.state = 'evading'
+            print 'Evading', direction
 
-        if direction != self.state and self.state != 'stopped':
+        if direction != self.state:
             if self.state != 'evading':
                 self.state = direction
 
