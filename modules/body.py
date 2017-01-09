@@ -47,7 +47,7 @@ class Body:
             else:
                 self.stop(config)
 
-        print 'a', self.status
+        print 'a', self.state
         print 'a', direction
 
         if direction != self.state:
