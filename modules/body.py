@@ -21,7 +21,6 @@ class Body:
         GPIO.output(38, False)
 
     def stop(self, config):
-        print 'stop'
         GPIO.output(35, False)
         GPIO.output(36, False)
         GPIO.output(37, False)
@@ -59,7 +58,7 @@ class Body:
         if direction != self.state and self.state != 'stopped':
             if self.state != 'evading':
                 self.state = direction
-                
+
             Config.update_config(config, 'Body', 'direction', direction)
 
             if direction == 'forwards' and allowed['F']:
@@ -85,4 +84,4 @@ class Body:
             else:
                 self.stop(config)
 
-            print 'moved', direction
+            print direction
