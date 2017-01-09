@@ -23,7 +23,7 @@ class Body:
         Config.update_config(config, 'Body', 'direction', 'stopped')
 
     def move(self, direction, sensors, config):
-        if (direction == 'forwards' and sensors['F'] < 20) or (direction == 'backwards' and sensors['R'] < 20):
+        if (direction == 'forwards' and sensors['F'] < 25) or (direction == 'backwards' and sensors['R'] < 25):
             print "Not safe to drive", direction
             direction = 'stopped (unsafe)'
 
@@ -66,7 +66,7 @@ class Body:
 
             # Evade mode - move in a direction for only half a second based on sensor information
             if auto_stop == True:
-                time.sleep(0.5)
+                time.sleep(0.1)
                 self.stop(config)
 
             print direction
