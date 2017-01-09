@@ -14,11 +14,15 @@ config = Config()
 sensors = Sensors()
 sensors.start()
 
-while True:
-    time.sleep(0.02)
-    Config.read_config(config)      # Keep reading config for changes
+try:
+    while True:
+        time.sleep(0.02)
+        Config.read_config(config)      # Keep reading config for changes
 
-    u_sensors = Sensors.retrieve(sensors)
+        u_sensors = Sensors.retrieve(sensors)
 
-    Body.move(body, Config.retrieve(config, 'Body', 'direction'), u_sensors, config)
-    Camera.move(camera, Config.retrieve(config, 'Head', 'x'), Config.retrieve(config, 'Head', 'y'))
+        Body.move(body, Config.retrieve(config, 'Body', 'direction'), u_sensors, config)
+        Camera.move(camera, Config.retrieve(config, 'Head', 'x'), Config.retrieve(config, 'Head', 'y'))
+
+except KeyboardInterrupt:
+    return False

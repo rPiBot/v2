@@ -23,7 +23,7 @@ class Body:
         Config.update_config(config, 'Body', 'direction', 'stopped')
 
     def move(self, direction, sensors, config):
-        if (direction == 'forwards' and sensors['F'] < 25) or (direction == 'backwards' and sensors['R'] < 25):
+        if ((direction == 'forwards' or self.state == 'forwards') and sensors['F'] < 25) or ((direction == 'backwards' or self.state == 'backwards') and sensors['R'] < 25):
             print "Not safe to drive", direction
             direction = 'stopped'
 
