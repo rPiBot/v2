@@ -32,11 +32,11 @@ class Body:
         if self.state == 'stopped': # Evade if necessary
             if sensors['F'] < 10:
                 direction = 'backwards'
-                auto_stop = 0.1
+                auto_stop = 0.05
 
             if sensors['R'] < 10:
                 direction = 'forwards'
-                auto_stop = 0.1
+                auto_stop = 0.05
 
             if sensors['F'] < 10 and sensors['R'] < 10:
                 direction = random.choice(['left', 'right'])
