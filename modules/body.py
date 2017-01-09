@@ -31,10 +31,9 @@ class Body:
 
     def move(self, direction, sensors, config):
         if self.state == 'evading':
-            self.state = 'stopped'
             direction = 'stopped'
 
-        allowed = { 'F': True, 'F': False }
+        allowed = { 'F': True, 'R': True }
 
         if sensors['F'] < 25:
             allowed['F'] = False
@@ -43,7 +42,7 @@ class Body:
             allowed['R'] = False
 
         if sensors['F'] < 25 or sensors['R'] < 25:
-            self.state = 'stopped'
+            direction = 'stopped'
 
         if sensors['F'] < 10:
             direction = 'backwards'
@@ -57,12 +56,10 @@ class Body:
         if sensors['F'] < 10 or sensors['R'] < 10:
             self.state = 'evading'
 
-        if self.state == 'stopped':
-            self.stop(config)
-            return False
-
         if direction != self.state and self.state != 'stopped':
-            self.state = direction
+            if self.state != 'evading':
+                self.state = direction
+                
             Config.update_config(config, 'Body', 'direction', direction)
 
             if direction == 'forwards' and allowed['F']:
