@@ -45,11 +45,9 @@ class Body:
                 direction = random.choice(['left', 'right'])
                 self.state = 'evading'
             else:
-                print 'stopping here'
+                direction = 'stop'
+                self.state = 'stopping'
                 self.stop(config)
-
-    #    print 'a', self.state
-#        print 'a', direction
 
         if direction != self.state and self.state != 'stopping':
             self.state = direction
@@ -83,7 +81,6 @@ class Body:
                 Config.update_config(config, 'Body', 'direction', direction)
 
             else:
-                print 'this stop'
                 self.stop(config)
 
             print 'moved', direction
