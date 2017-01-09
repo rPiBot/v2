@@ -16,7 +16,7 @@ sensors.start()
 
 try:
     while True:
-        time.sleep(0.02)
+        time.sleep(0.05)
         Config.read_config(config)      # Keep reading config for changes
 
         u_sensors = Sensors.retrieve(sensors)

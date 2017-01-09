@@ -23,7 +23,7 @@ class Sensors(threading.Thread):
             self.sensors['F'] = self.check_distance(TRIG['F'], ECHO['F'])
             self.sensors['R'] = self.check_distance(TRIG['R'], ECHO['R'])
 
-            time.sleep(0.05)
+            time.sleep(0.1)
 
     def stop(self):
         self.running = False
