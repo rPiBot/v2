@@ -40,11 +40,17 @@ class Sensors(threading.Thread):
         time.sleep(0.00001)
         GPIO.output(trigger, False)
 
+        start = 0
+        end = 0
+
         while GPIO.input(echo) == 0:
             start = time.time()
 
         while GPIO.input(echo) == 1:
             end = time.time()
 
-        duration = end - start
-        return round((duration * 17150), 2)
+        if start != 0 and end != 0:
+          duration = end - start
+          return round((duration * 17150), 2)
+        else:
+          return False

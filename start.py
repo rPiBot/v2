@@ -17,7 +17,7 @@ sensors.start()
 
 try:
     while True:
-        time.sleep(0.05)
+        time.sleep(0.1)
         Config.read_config(config)      # Keep reading config for changes
 
         Body.move(body, Config.retrieve(config, 'Body', 'direction'), Sensors.retrieve(sensors), config)
