@@ -14,10 +14,10 @@ class Camera():
     def move(self, x, y):
         # Only move if the new x request is different from the current cam['x'] angle
         if x != self.cam['x']:
-            self.pan_tilt(self, 'x', x, '')
+            self.pan_tilt('x', x, '')
 
         if y != self.cam['y']:
-            self.pan_tilt(self, 'y', y, '')
+            self.pan_tilt('y', y, '')
 
     # Default is to move left/right or up/down 10 degrees ('step' type)
     # Pass 'snap' as a type to move to the extreme of that axis (for example 'x', 'forwards', 'snap')
