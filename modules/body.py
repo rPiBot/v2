@@ -30,6 +30,9 @@ class Body:
         Config.update_config(config, 'Body', 'direction', 'stopped')
 
     def move(self, direction, sensors, config):
+        if self.state == 'evading':
+          self.state = 'stopping'
+
         if (sensors['F'] < 25 or sensors['R'] < 25):
             if sensors['F'] < 10:
                 direction = 'backwards'
@@ -42,9 +45,6 @@ class Body:
                 self.state = 'evading'
             else:
                 self.stop(config)
-
-        if self.state != 'evading':
-          self.stop(config)
 
         if direction != self.state:
             Config.update_config(config, 'Body', 'direction', direction)
@@ -73,4 +73,4 @@ class Body:
             else:
                 self.stop(config)
 
-            print direction
+            print 'moved', direction
