@@ -51,8 +51,6 @@ class Body:
 
             self.state = direction
 
-            print 'checking distance'
-
             if direction == 'forwards':
               GPIO.output(37, True)
               GPIO.output(38, True)
@@ -70,6 +68,5 @@ class Body:
             if auto_stop == True:
                 time.sleep(0.5)
                 self.stop(config)
-
 
             print direction

@@ -38,7 +38,7 @@ class Camera():
             else:
                 self.cam[axis] = float(direction)
 
-            print axis, direction, self.cam[axis]
+            #print axis, direction, self.cam[axis]
 
             servo = 1 if axis == 'x' else 2
             ss.set_servo(servo, self.cam[axis])
