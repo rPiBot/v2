@@ -31,7 +31,8 @@ class Body:
 
     def move(self, direction, sensors, config):
         if self.state == 'evading':
-          self.state = 'stopping'
+            direction = 'stop'
+            self.state = 'stopping'
 
         if (sensors['F'] < 25 or sensors['R'] < 25):
             if sensors['F'] < 10:
