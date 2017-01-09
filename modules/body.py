@@ -51,7 +51,7 @@ class Body:
     #    print 'a', self.state
 #        print 'a', direction
 
-        if direction != self.state:
+        if direction != self.state and self.state != 'stopping':
             self.state = direction
 
             if direction == 'forwards':
