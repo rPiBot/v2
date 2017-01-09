@@ -30,25 +30,18 @@ class Body:
 
     def move(self, direction, sensors, config):
         if (sensors['F'] < 25 or sensors['R'] < 25):
-            print "Not safe to drive", direction
-            self.state = 'stopped'
-
-        if self.state == 'evading':
-            direction = 'stopped'
-            self.state = 'stopped'
-
-        if self.state == 'stopped': # Evade if necessary
             if sensors['F'] < 10:
                 direction = 'backwards'
                 self.state = 'evading'
-
-            if sensors['R'] < 10:
+            elif sensors['R'] < 10:
                 direction = 'forwards'
                 self.state = 'evading'
-
-            if sensors['F'] < 10 and sensors['R'] < 10:
+            elif sensors['F'] < 10 and sensors['R'] < 10:
                 direction = random.choice(['left', 'right'])
                 self.state = 'evading'
+            else:
+                direction = 'stopped'
+                self.state = 'stopped'
 
         if self.state == 'stopped' or direction == 'stopped':
             self.stop(config)
